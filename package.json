@@ -26,6 +26,8 @@
         "react": "^17.0.1",
         "react-app-polyfill": "^2.0.0",
         "react-bootstrap": "^1.5.2",
+        "react-chat-elements": "^10.14.0",
+        "react-chat-ui": "^0.4.0",
         "react-dom": "^17.0.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.0",

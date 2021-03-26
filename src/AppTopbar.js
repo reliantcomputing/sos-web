@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Constants from "./helpers/constants";
 import { Toast } from "primereact/toast";
 import { UPDATES } from "./redux-helpers/Types";
+import { Link } from "react-router-dom";
 
 export const AppTopbar = (props) => {
     const orders = useSelector((state) => state.orders.filter((_order) => _order.status === Constants.ORDER_STATUS.PLACED));
@@ -30,23 +31,22 @@ export const AppTopbar = (props) => {
                 <span className="pi pi-bars" />
             </button>
             <div className="layout-topbar-icons">
-                <button type="button" className="p-link">
-                    <span className="layout-topbar-item-text">Events</span>
-                    <span className="layout-topbar-icon pi pi-calendar" />
-                    <span className="layout-topbar-badge">{orders.length}</span>
-                </button>
+                <Link to="/unattended/orders">
+                    <button type="button" className="p-link">
+                        <span className="layout-topbar-item-text">Events</span>
+                        <span className="layout-topbar-icon pi pi-calendar" />
+                        <span className="layout-topbar-badge">{orders.length}</span>
+                    </button>
+                </Link>
                 <button type="button" className="p-link">
                     <span className="layout-topbar-item-text">Events</span>
                     <span className="layout-topbar-icon pi pi-envelope" />
                     <span className="layout-topbar-badge">{orders.length}</span>
                 </button>
                 <button type="button" className="p-link">
-                    <span className="layout-topbar-item-text">Settings</span>
-                    <span className="layout-topbar-icon pi pi-cog" />
-                </button>
-                <button type="button" className="p-link">
-                    <span className="layout-topbar-item-text">User</span>
-                    <span className="layout-topbar-icon pi pi-user" />
+                    <span className="layout-topbar-item-text">Events</span>
+                    <span className="layout-topbar-icon pi pi-comment" />
+                    <span className="layout-topbar-badge">{orders.length}</span>
                 </button>
             </div>
         </div>

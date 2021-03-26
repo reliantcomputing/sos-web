@@ -14,7 +14,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 
 const axios = require("axios");
 
-export const Orders = () => {
+export const PlacedOrders = () => {
     const orderChannel = useSelector((state) => state.channels.orderChannel);
 
     // Items
@@ -25,7 +25,7 @@ export const Orders = () => {
     };
 
     // State
-    const Items = useSelector((state) => state.orders);
+    const Items = useSelector((state) => state.orders.filter((_order) => _order.status === Constants.ORDER_STATUS.PLACED));
     const [Item, setItem] = useState({ ...emptyItem });
     const [editing, setEditing] = useState(false);
     const [ItemDialog, setItemDialog] = useState(false);
@@ -151,7 +151,7 @@ export const Orders = () => {
     const header = (
         <div className="table-header">
             <h5 className="p-m-0">
-                <b>Manage Orders</b>
+                <b>Manage Unattended Orders</b>
             </h5>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
@@ -205,7 +205,6 @@ export const Orders = () => {
         return (
             <>
                 {rowData.status === Constants.ORDER_STATUS.APPROVED ? <span className="badge badge-success p-2">{rowData.status}</span> : ""}
-                {rowData.status === Constants.ORDER_STATUS.PAID ? <span className="badge badge-success p-2">{rowData.status}</span> : ""}
                 {rowData.status === Constants.ORDER_STATUS.REJECTED ? <span className="badge badge-danger p-2">{rowData.status}</span> : ""}
                 {rowData.status === Constants.ORDER_STATUS.PLACED ? <span className="badge badge-warning p-2">{rowData.status}</span> : ""}
             </>
@@ -417,13 +416,12 @@ export const Orders = () => {
                             header="Total price"
                             sortable
                             body={(data) => {
-                                console.log(data);
                                 let price = 0;
                                 data.extras.forEach((e) => {
-                                    price = price + parseFloat(e.extra.price * e.qty);
+                                    price = price + parseFloat(e.extra.price);
                                 });
                                 data.menus.forEach((e) => {
-                                    price = price + parseFloat(e.menu.price * e.qty);
+                                    price = price + parseFloat(e.menu.price);
                                 });
                                 return bodyTemplate(`R${price}`, "Price");
                             }}

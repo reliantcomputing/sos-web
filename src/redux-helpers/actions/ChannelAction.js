@@ -1,7 +1,7 @@
 import { Socket } from "phoenix";
 import Store from "../Store";
 import Constants from "../../helpers/constants";
-import { ADD_ORDER, ADD_PENDING_CHATS, LOAD_CHANNELS, UPDATES, UPDATE_ORDER } from "../Types";
+import { ADD_CHATS, ADD_MENU, ADD_MESSAGE, ADD_ORDER, LOAD_CHANNELS, UPDATES, UPDATE_ORDER } from "../Types";
 
 const url = Constants.SOCKET_URL;
 
@@ -13,6 +13,27 @@ export const joinChannels = (chats, orders, user) => {
     const orderChannel = socket.channel("order", {});
 
     const chatChannel = socket.channel("chat", {});
+
+    chatChannel.on("create:chat", (payload) => {
+        Store.dispatch({
+            type: ADD_CHATS,
+            payload: payload,
+        });
+    });
+
+    chatChannel.on("accept:chat", (payload) => {
+        Store.dispatch({
+            type: ADD_CHATS,
+            payload: payload.chat,
+        });
+        chatChannel.on("send:message:" + payload.chatId, (payload) => {
+            console.log(payload);
+            Store.dispatch({
+                type: ADD_MESSAGE,
+                payload,
+            });
+        });
+    });
 
     orderChannel.on("place:order", (payload) => {
         console.log("Order has been placed.....");
@@ -27,6 +48,14 @@ export const joinChannels = (chats, orders, user) => {
                 payload: Constants.UPDATE.ORDER_ADDED,
             });
             orderChannel.on(`reject:order:${res.data.data.id}`, (payload) => {
+                axios.get(`${Constants.BASE_URL}/api/orders/${payload.id}`).then((res) => {
+                    Store.dispatch({
+                        type: UPDATE_ORDER,
+                        payload: res.data.data,
+                    });
+                });
+            });
+            orderChannel.on(`pay:order:${res.data.data.id}`, (payload) => {
                 axios.get(`${Constants.BASE_URL}/api/orders/${payload.id}`).then((res) => {
                     Store.dispatch({
                         type: UPDATE_ORDER,
@@ -71,15 +100,6 @@ export const joinChannels = (chats, orders, user) => {
                 });
             });
         });
-    });
-
-    chatChannel.on("", (payload) => {
-        if (user.id === payload.userId) {
-            Store.dispatch({
-                type: ADD_PENDING_CHATS,
-                payload: payload,
-            });
-        }
     });
 
     chatChannel.join();

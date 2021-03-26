@@ -10,7 +10,8 @@ export const ADD_MENU = "ADD_MENU";
 
 export const FETCH_CHATS = "FETCH_CHATS";
 export const ADD_CHATS = "ADD_CHAT";
-export const ADD_PENDING_CHATS = "ADD_PENDING_CHAT";
+export const CREATE_PENDING_CHAT = "CREATE_PENDING_CHAT";
+export const ADD_MESSAGE = "ADD_MESSAGE";
 
 export const LOAD_CHANNELS = "LOAD_CHANNELS";
 

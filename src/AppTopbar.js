@@ -13,6 +13,8 @@ export const AppTopbar = (props) => {
     const toast = useRef(null);
 
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const chats = useSelector((state) => state.chats.filter((c) => !!!c.id));
 
     useEffect(() => {
         if (update !== Constants.UPDATE.ORDER_LOADED) {
@@ -31,23 +33,28 @@ export const AppTopbar = (props) => {
                 <span className="pi pi-bars" />
             </button>
             <div className="layout-topbar-icons">
-                <Link to="/unattended/orders">
+                <Link to="/orders">
                     <button type="button" className="p-link">
                         <span className="layout-topbar-item-text">Events</span>
                         <span className="layout-topbar-icon pi pi-calendar" />
                         <span className="layout-topbar-badge">{orders.length}</span>
                     </button>
                 </Link>
-                <button type="button" className="p-link">
-                    <span className="layout-topbar-item-text">Events</span>
-                    <span className="layout-topbar-icon pi pi-envelope" />
-                    <span className="layout-topbar-badge">{orders.length}</span>
-                </button>
-                <button type="button" className="p-link">
-                    <span className="layout-topbar-item-text">Events</span>
-                    <span className="layout-topbar-icon pi pi-comment" />
-                    <span className="layout-topbar-badge">{orders.length}</span>
-                </button>
+                {user.role.name == Constants.ROLES.WAITER && (
+                    <button type="button" className="p-link">
+                        <span className="layout-topbar-item-text">Events</span>
+                        <span className="layout-topbar-icon pi pi-envelope" />
+                        <span className="layout-topbar-badge">{0}</span>
+                    </button>
+                )}
+
+                {user.role.name == Constants.ROLES.WAITER && (
+                    <button type="button" className="p-link">
+                        <span className="layout-topbar-item-text">Events</span>
+                        <span className="layout-topbar-icon pi pi-comment" />
+                        <span className="layout-topbar-badge">{chats.length}</span>
+                    </button>
+                )}
             </div>
         </div>
     );

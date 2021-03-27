@@ -33,6 +33,7 @@ import { EmptyPage } from "./EmptyPage";
 import { AppFooter } from "../AppFooter";
 import { Sits } from "./Sits";
 import { PlacedOrders } from "./PlacedOrder";
+import Constants from "../helpers/constants";
 
 const Main = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -109,13 +110,22 @@ const Main = () => {
     };
 
     const menu = [
-        { label: "Employees", icon: "pi pi-fw pi-users", to: "/employees" },
-        { label: "Orders", icon: "pi pi-fw pi-home", to: "orders" },
+        { label: "Orders", icon: "pi pi-fw pi-home", to: "/orders" },
         { label: "Menus", icon: "pi pi-fw pi-home", to: "/menus" },
         { label: "Extras", icon: "pi pi-fw pi-home", to: "/extras" },
-        { label: "Chats", icon: "pi pi-fw pi-comment", to: "/chats" },
-        { label: "Sits", icon: "pi pi-fw pi-home", to: "/sits" },
     ];
+
+    useEffect(() => {
+        if (user.role) {
+            if (user.role.name == "MANAGER") {
+                menu.unshift({ label: "Employees", icon: "pi pi-fw pi-home", to: "employees" });
+                menu.push({ label: "Sits", icon: "pi pi-fw pi-home", to: "/sits" });
+            }
+            if (user.role.name == "WAITER") {
+                menu.push({ label: "Chats", icon: "pi pi-fw pi-comment", to: "/chats" });
+            }
+        }
+    }, [user]);
 
     const addClass = (element, className) => {
         if (element.classList) element.classList.add(className);

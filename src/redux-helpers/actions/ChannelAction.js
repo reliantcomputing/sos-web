@@ -26,7 +26,7 @@ export const joinChannels = (chats, orders, user) => {
             type: ADD_CHATS,
             payload: payload.chat,
         });
-        chatChannel.on("send:message:" + payload.chatId, (payload) => {
+        chatChannel.on(`send:message:${payload.chat.id}`, (payload) => {
             console.log(payload);
             Store.dispatch({
                 type: ADD_MESSAGE,

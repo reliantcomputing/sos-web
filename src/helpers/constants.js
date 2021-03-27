@@ -11,6 +11,11 @@ const Constants = {
         ORDER_ADDED: "ORDER_ADDED",
         ORDER_LOADED: "ORDER_LOADED",
     },
+    ROLES: {
+        MANAGER: "MANAGER",
+        WAITER: "WAITER",
+        KITCHEN: "KITCHEN",
+    },
 };
 
 export default Constants;

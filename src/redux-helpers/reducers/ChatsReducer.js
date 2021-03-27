@@ -1,3 +1,4 @@
+import { Message } from "react-chat-ui";
 import { ADD_CHATS, ADD_MESSAGE, CREATE_PENDING_CHAT } from "../Types";
 
 export const ChatsReducer = (state = [], action) => {
@@ -17,14 +18,22 @@ export const ChatsReducer = (state = [], action) => {
             }
             return _items;
         case ADD_MESSAGE:
+            console.log("ADDING MESSAGE", action.payload);
+            const _message = new Message({
+                id: action.payload.user._id,
+                text: action.payload.text,
+            });
             return state.map((_item, index) => {
-                if (_item.id !== action.payload.chatId) {
+                console.log("Running the map", _item);
+                if (_item.id != action.payload.chatId) {
+                    console.log("Not the right one find a chat");
                     // This isn't the _item we care about - keep it as-is
                     return _item;
                 }
+                console.log("The right one a chat");
                 return {
                     ..._item,
-                    ..._item.messages.push(action.payload),
+                    ..._item.messages.unshift(_message),
                 };
             });
         default:

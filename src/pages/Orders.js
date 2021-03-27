@@ -37,6 +37,7 @@ export const Orders = () => {
     const [showItem, setShowItem] = useState(false);
     const [showProvideReason, setShowProvideReason] = useState(false);
     const [reason, setReason] = useState("");
+    const user = useSelector((state) => state.user);
 
     useEffect(() => {
         console.log(Items);
@@ -235,6 +236,14 @@ export const Orders = () => {
                     <div>
                         Order #{Item.id + " "}
                         <span className="badge badge-warning p-2">{Item.status}</span>
+                    </div>
+                ) : (
+                    ""
+                )}
+                {Item.status === Constants.ORDER_STATUS.PAID ? (
+                    <div>
+                        Order #{Item.id + " "}
+                        <span className="badge badge-success p-2">{Item.status}</span>
                     </div>
                 ) : (
                     ""
@@ -642,8 +651,11 @@ export const Orders = () => {
                                     />
                                 </DataTable>
                             </div>
+                            <div className="row pl-3">
+                                <b>Sit number: 1</b>
+                            </div>
                             <div className="row p-3">{renderPrice()}</div>
-                            <Toolbar className="p-mb-4" left={leftOrderToolbarTemplate} />
+                            {Item.status !== Constants.ORDER_STATUS.PAID && user.role?.name == Constants.ROLES.KITCHEN ? <Toolbar className="p-mb-4" left={leftOrderToolbarTemplate} /> : null}
                         </div>
                     </Dialog>
                 </div>

@@ -19,9 +19,10 @@ export const ChatsReducer = (state = [], action) => {
             return _items;
         case ADD_MESSAGE:
             console.log("ADDING MESSAGE", action.payload);
+            console.log(state);
             const _message = new Message({
                 id: action.payload.user._id,
-                text: action.payload.text,
+                message: action.payload.text,
             });
             return state.map((_item, index) => {
                 console.log("Running the map", _item);
@@ -31,9 +32,13 @@ export const ChatsReducer = (state = [], action) => {
                     return _item;
                 }
                 console.log("The right one a chat");
+                // return {
+                //     ..._item,
+                //     ..._item.messages.unshift(_message),
+                // };
                 return {
                     ..._item,
-                    ..._item.messages.unshift(_message),
+                    messages: new Array(_message),
                 };
             });
         default:

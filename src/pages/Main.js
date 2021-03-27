@@ -120,8 +120,7 @@ const Main = () => {
             if (user.role.name == "MANAGER") {
                 menu.unshift({ label: "Employees", icon: "pi pi-fw pi-home", to: "employees" });
                 menu.push({ label: "Sits", icon: "pi pi-fw pi-home", to: "/sits" });
-            }
-            if (user.role.name == "WAITER") {
+            } else if (user.role.name == Constants.ROLES.WAITER) {
                 menu.push({ label: "Chats", icon: "pi pi-fw pi-comment", to: "/chats" });
             }
         }

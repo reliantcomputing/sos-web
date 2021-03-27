@@ -49,11 +49,13 @@ export const AppTopbar = (props) => {
                 )}
 
                 {user.role.name == Constants.ROLES.WAITER && (
-                    <button type="button" className="p-link">
-                        <span className="layout-topbar-item-text">Events</span>
-                        <span className="layout-topbar-icon pi pi-comment" />
-                        <span className="layout-topbar-badge">{chats.length}</span>
-                    </button>
+                    <Link to="/chats">
+                        <button type="button" className="p-link">
+                            <span className="layout-topbar-item-text">Events</span>
+                            <span className="layout-topbar-icon pi pi-comment" />
+                            <span className="layout-topbar-badge">{chats.length}</span>
+                        </button>
+                    </Link>
                 )}
             </div>
         </div>

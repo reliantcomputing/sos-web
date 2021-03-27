@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatFeed, Message } from "react-chat-ui";
 import { ChatList } from "react-chat-elements";
 import { Button } from "primereact/button";
@@ -22,6 +22,11 @@ export const Chat = () => {
     const [text, setText] = useState("");
 
     console.log(chats);
+    useEffect(() => {
+        if (chat.id) {
+            setChat(chats.find((c) => c.id == chat.id));
+        }
+    }, [chats]);
 
     const renderChats = (_chat) => {
         return (

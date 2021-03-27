@@ -37,7 +37,7 @@ export const Chat = () => {
                     </div>
                     <div className="col-md-10">
                         <h4 style={{ margin: 0, padding: 0, fontWeight: "bold", color: "white" }}>{_chat.name}</h4>
-                        <p style={{ margin: 0, padding: 0, color: "white" }}>{_chat.messages.length > 0 ? _chat.messages[_chat.messages.length - 1] : "No messages"}</p>
+                        {/* <p style={{ margin: 0, padding: 0, color: "white" }}>{_chat.messages.length > 0 ? _chat.messages[_chat.messages.length - 1] : "No messages"}</p> */}
                     </div>
                 </div>
             </div>
@@ -89,8 +89,7 @@ export const Chat = () => {
             </div>
             <div className="col-md-8">
                 <ChatFeed
-                    // messages={chat.messages ? chat.messages : []} // Array: list of message objects
-                    messages={messages} // Array: list of message objects
+                    messages={chat.messages ? chat.messages : []} // Array: list of message objects
                     isTyping={false} // Boolean: is the recipient typing
                     hasInputField={false} // Boolean: use our input, or use your own
                     showSenderName // show the name of the user who sent the message
@@ -115,7 +114,7 @@ export const Chat = () => {
                             <Button
                                 label="Send"
                                 onClick={() => {
-                                    console.log("================================");
+                                    console.log("================================", chat);
                                     chatChannel.push(`send:message:${chat.id}`, {
                                         seen: false,
                                         user_id: "1",

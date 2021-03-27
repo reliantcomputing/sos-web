@@ -38,7 +38,7 @@ export const ChatsReducer = (state = [], action) => {
                 // };
                 return {
                     ..._item,
-                    messages: new Array(_message),
+                    messages: [..._item.messages, _message],
                 };
             });
         default:
